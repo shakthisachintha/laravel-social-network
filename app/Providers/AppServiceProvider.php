@@ -6,6 +6,7 @@ use Auth;
 use Hash;
 use Illuminate\Support\ServiceProvider;
 use Validator;
+use Illuminate\Support\Facades\Schema;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -16,6 +17,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        Schema::defaultStringLength(191);
+
         Validator::extend('passcheck', function($attribute, $value, $parameters)
         {
             return Hash::check($value, Auth::user()->getAuthPassword());
