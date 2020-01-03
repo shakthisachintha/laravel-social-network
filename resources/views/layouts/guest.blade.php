@@ -16,6 +16,7 @@
     <link href="{{ asset('plugins/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
     <link href="{{ asset('plugins/bootstrap/css/bootstrap-theme.min.css') }}" rel="stylesheet">
     <link href="{{ asset('css/guest.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/bsUtility.css') }}" rel="stylesheet">
 </head>
 <body>
 

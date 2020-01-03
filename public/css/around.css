@@ -1321,17 +1321,17 @@ a, a:hover, a:active, a:visited, a:focus {
     font-style: italic;
 }
 
-#userListModal .user_list {
+.userListModal .user_list {
     max-height: 400px;
     overflow-x: auto;
     padding: 20px;
 }
 
-#userListModal .user_list #modal-table{
+.userListModal .user_list #modal-table{
     width: 100%;
 }
 
-#userListModal .user_list a {
+.userListModal .user_list a {
     display: block;
     border-bottom: 1px solid #dedede;
     padding: 10px;
@@ -1339,17 +1339,17 @@ a, a:hover, a:active, a:visited, a:focus {
     position: relative;
 }
 
-#userListModal .user_list .a:hover {
+.userListModal .user_list .a:hover {
     background: #e1f1fe;
 }
 
-#userListModal .user_list a .image {
+.userListModal .user_list a .image {
     float: left;
     width: 70px;
     margin-right: 10px;
 }
 
-#userListModal .user_list a strong {
+.userListModal .user_list a strong {
     font-size: 15px;
     color: #555;
     font-family: Arial, serif;
@@ -1357,13 +1357,13 @@ a, a:hover, a:active, a:visited, a:focus {
     margin-top: 5px;
 }
 
-#userListModal .user_list a span {
+.userListModal .user_list a span {
     font-size: 13px;
     color: #666;
     display: block;
 }
 
-#userListModal .user_list a small {
+.userListModal .user_list a small {
     font-style: italic;
     color: #999;
 }

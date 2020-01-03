@@ -21,6 +21,7 @@
     <link href="{{ asset('plugins/select2/dist/css/select2.min.css') }}" rel="stylesheet">
     <link href="{{ asset('plugins/bootstrap/css/bootstrap-theme.min.css') }}" rel="stylesheet">
     <link href="{{ asset('css/around.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/bsUtility.css') }}" rel="stylesheet">
 
     @yield('header')
 </head>
