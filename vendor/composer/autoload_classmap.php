@@ -18,6 +18,7 @@ return array(
     'App\\Http\\Controllers\\Controller' => $baseDir . '/app/Http/Controllers/Controller.php',
     'App\\Http\\Controllers\\FindLocationController' => $baseDir . '/app/Http/Controllers/FindLocationController.php',
     'App\\Http\\Controllers\\FollowController' => $baseDir . '/app/Http/Controllers/FollowController.php',
+    'App\\Http\\Controllers\\GroupChatController' => $baseDir . '/app/Http/Controllers/GroupChatController.php',
     'App\\Http\\Controllers\\GroupController' => $baseDir . '/app/Http/Controllers/GroupController.php',
     'App\\Http\\Controllers\\HomeController' => $baseDir . '/app/Http/Controllers/HomeController.php',
     'App\\Http\\Controllers\\MessagesController' => $baseDir . '/app/Http/Controllers/MessagesController.php',
