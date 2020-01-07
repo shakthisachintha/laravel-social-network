@@ -67,6 +67,10 @@ class User extends Authenticatable
         return false;
     }
 
+    public function getGroupChats(){
+        return $this->belongsToMany('App\GroupChat','grpchat_members');
+    }
+
     public function getPhoto($w = null, $h = null){
         if (!empty($this->profile_path)){
             $path = 'storage/uploads/profile_photos/'.$this->profile_path;

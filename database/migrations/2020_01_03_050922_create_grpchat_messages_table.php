@@ -18,8 +18,8 @@ class CreateGrpchatMessagesTable extends Migration
             $table->bigInteger('grpchat_id');
             $table->bigInteger('sender');
             $table->text('message');
-            $table->json('seenby');
-            $table->boolean('deleted');
+            $table->json('seenby')->nullable();
+            $table->boolean('deleted')->default('0');
             $table->foreign('grpchat_id')->references('on')->on('grpchats');
             $table->foreign('sender')->references('on')->on('users');
             $table->timestamps();

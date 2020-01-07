@@ -11,4 +11,8 @@ class GroupChat extends Model
     public function getAdmin(){
         return $this->belongsTo('App\Models\User','admin','id');
     }
+
+    public function getMessages(){
+        return $this->hasMany('App\GroupChatMessages','grpchat_id');
+    }
 }

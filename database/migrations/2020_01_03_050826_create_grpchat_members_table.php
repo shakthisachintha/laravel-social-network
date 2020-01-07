@@ -15,9 +15,9 @@ class CreateGrpchatMembersTable extends Migration
     {
         Schema::create('grpchat_members', function (Blueprint $table) {
             $table->increments('id');
-            $table->bigInteger('grpchat_id');
+            $table->bigInteger('group_chat_id');
             $table->bigInteger('user_id');
-            $table->foreign('grpchat_id')->references('id')->on('grpchats');            
+            $table->foreign('group_chat_id')->references('id')->on('grpchats');            
             $table->foreign('user_id')->references('id')->on('users');            
             $table->timestamps();
         });
