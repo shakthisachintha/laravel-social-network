@@ -26,7 +26,7 @@ function resetGroups(){
 
 function setName(name){
     group.name=name;
-    if(group.members.length>2){
+    if(group.members.length>=2){
         $("#create-grp-btn").removeAttr("disabled");
     }
 }
@@ -34,15 +34,19 @@ function setName(name){
 function createGroup(){
    if(group.name && group.members.length>2){
        $.ajax({
-            url: BASE_URL + '/direct-messages/people-list',
+            url: BASE_URL + '/group-chat/create',
             type: "POST",
             timeout: 5000,
             contentType: "application/json",
             cache: false,
             processData: false,
+            data:JSON.stringify(group),
             headers: {'X-CSRF-TOKEN': CSRF},
             success: function (response) {
-
+                console.log(response);
+            },
+            error:function(data){
+                console.log(data);
             }
        });
    }

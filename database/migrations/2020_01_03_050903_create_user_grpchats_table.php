@@ -13,7 +13,7 @@ class CreateUserGrpchatsTable extends Migration
      */
     public function up()
     {
-        Schema::create('user__grpchats', function (Blueprint $table) {
+        Schema::create('user_grpchats', function (Blueprint $table) {
             $table->increments('id');
             $table->bigInteger('user_id');
             $table->bigInteger('grpchat_id');
@@ -30,6 +30,6 @@ class CreateUserGrpchatsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('user__grpchats');
+        Schema::dropIfExists('user_grpchats');
     }
 }

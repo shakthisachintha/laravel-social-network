@@ -4,7 +4,8 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Grpchat_Messages extends Model
+class UserGroupChat extends Model
 {
     //
+    protected $table='user_grpchats';
 }

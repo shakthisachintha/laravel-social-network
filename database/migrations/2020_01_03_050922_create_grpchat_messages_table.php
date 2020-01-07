@@ -13,10 +13,11 @@ class CreateGrpchatMessagesTable extends Migration
      */
     public function up()
     {
-        Schema::create('grpchat__messages', function (Blueprint $table) {
+        Schema::create('grpchat_messages', function (Blueprint $table) {
             $table->increments('id');
             $table->bigInteger('grpchat_id');
             $table->bigInteger('sender');
+            $table->text('message');
             $table->json('seenby');
             $table->boolean('deleted');
             $table->foreign('grpchat_id')->references('on')->on('grpchats');
@@ -32,6 +33,6 @@ class CreateGrpchatMessagesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('grpchat__messages');
+        Schema::dropIfExists('grpchat_messages');
     }
 }
