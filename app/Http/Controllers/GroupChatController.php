@@ -18,6 +18,29 @@ class GroupChatController extends Controller
         $this->middleware('auth');
     }
 
+    public function send(Request $request){
+        $user=Auth::user();
+        $chat_id=$request->id;
+        $message=$request->message;
+        $grp_message=new GroupChatMessage();
+        $grp_message->sender=$user->id;
+        $grp_message->message=$message;
+        $grp_message->grpchat_id=$chat_id;
+        $message=$grp_message;
+        if ($grp_message->save()){
+            $html = View::make('messages.group.single_message', compact('user', 'message'))->render();
+            return response()->json([
+                "code"=>200,
+                "message_id"=>$grp_message->id,
+                "html"=>$html,
+            ]);
+        }else{
+            return response()->json([
+                "code"=>400,
+            ]);
+        }
+    }
+
     public function getGroupList(){
         $user=Auth::user();
         $group_list=User::find($user->id)->getGroupChats;
@@ -32,8 +55,26 @@ class GroupChatController extends Controller
         ]);
     }
 
-    public function deleteGroup(){
+    public function deleteGroup(Request $request){
+        $grp_messages=GroupChat::find($request->id)->getMessages;
         
+        foreach ($grp_messages as $message) {
+            GroupChatMessage::find($message->id)->delete();
+        }
+        $grp_members=GroupChatMembers::where('group_chat_id',$request->id)->get();
+        
+        foreach ($grp_members as $member) {
+            GroupChatMembers::find($member->id)->delete();
+        }
+
+        GroupChat::find($request->id)->delete();
+
+        return response()->json([
+            'code'=>200,
+            'id'=>$request->id,
+            'message'=>"Group Chat Deleted",
+        ]);
+
     }
 
     public function createGroup(Request $request)

@@ -76,7 +76,10 @@ Route::post('/direct-messages/notifications', 'MessagesController@notifications'
 
 // Group Messages
 Route::post('/group-chat/create', 'GroupChatController@createGroup');
+Route::post('/group-chat/send', 'GroupChatController@send');
 Route::post('/group-chat/delete-message', 'GroupChatController@deleteGroupMessage');
+Route::post('/group-chat/delete-chat', 'GroupChatController@deleteGroup');
+Route::post('/group-chat/delete-chat', 'GroupChatController@newMessage');
 
 // Find Location
 Route::get('/find-my-location', 'FindLocationController@index');

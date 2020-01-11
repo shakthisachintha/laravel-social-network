@@ -15,4 +15,10 @@ class GroupChat extends Model
     public function getMessages(){
         return $this->hasMany('App\GroupChatMessage','grpchat_id')->orderBy('created_at','DESC')->limit(100);
     }
+
+    public function getMembers(){
+        return $this->belongsToMany('App\Models\User','grpchat_members');
+    }
+
+
 }

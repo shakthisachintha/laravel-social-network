@@ -40,7 +40,7 @@
 
 <div class="message-write">
     <form id="form-message-write">
-        <input type="hidden" name="user_id" value="3">
+        <input type="hidden" name="chat_id" value="{{$group->id}}">
         <textarea class="form-control" rows="1" placeholder="Your message.." onkeyup="sendGroupMessage(event)"
             spellcheck="false"></textarea>
     </form>
