@@ -4,7 +4,7 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Carbon\Carbon;
 
-class GroupChatMessages extends Model
+class GroupChatMessage extends Model
 {
     protected $table="grpchat_messages";
 
@@ -16,6 +16,10 @@ class GroupChatMessages extends Model
     public function delete(){
         $this->deleted=1;
         $this->save();
+    }
+
+    public function getSender(){
+        return $this->belongsTo('App\Models\User','sender','id');
     }
 
     public function seenBy($user_id=null){

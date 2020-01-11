@@ -30,14 +30,23 @@
 
 
                 <div class="friends-list">
-
-
+                    <a href="javascript:;" id="chat-people-list-3" onclick="showChat(3)" class="friend active">
+                        <div class="circle"></div>
+                        <div class="image">
+                            <img class="img-circle"
+                                src="http://localhost:8000/resizer.php?&amp;w=70&amp;h=70&amp;zc=1&amp;src=images/profile-picture.png">
+                        </div>
+                        <div class="detail">
+                            <strong>Jordyn Marvin</strong>
+                            <span>jjjj</span>
+                            <small>1 minute ago</small>
+                        </div>
+                        <input type="hidden" name="people-list-first-id" value="3">
+                        <div class="clearfix"></div>
+                    </a>
                 </div>
 
                 <div class="chat">
-
-
-
                 </div>
 
             </div>
@@ -95,7 +104,8 @@
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <button onclick="resetGroups();" type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <button onclick="resetGroups();" type="button" class="close" data-dismiss="modal"
+                                aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
                             <h5 class="lead modal-title">Create New Group Chat</h5>
@@ -111,8 +121,8 @@
                                 <div>
                                     <div class="form-group">
                                         <label for="group-name">Group Name</label>
-                                        <input onchange="setName(this.value);" id="group-name" class="form-control" type="text"
-                                            placeholder="Ex. My Aweseome Group" name="">
+                                        <input onchange="setName(this.value);" id="group-name" class="form-control"
+                                            type="text" placeholder="Ex. My Aweseome Group" name="">
                                     </div>
                                 </div>
                                 <label>Add Members To The Chat</label>
@@ -144,8 +154,7 @@
                                     </div>
                                     @endif
                                 </div>
-                                <div class="mt-3 mb-3 pt-3 pb-3 bg-dark" style="display:none"
-                                    id="group-member-widget">
+                                <div class="mt-3 mb-3 pt-3 pb-3 bg-dark" style="display:none" id="group-member-widget">
                                     <label for="">
                                         Added Members
                                     </label>
@@ -155,9 +164,10 @@
                                 </div>
                             </div>
 
-                            <button class="mt-3 btn btn-success" id="create-grp-btn" disabled onclick="createGroup();">Create Group</button>
+                            <button class="mt-3 btn btn-success" id="create-grp-btn" disabled
+                                onclick="createGroup();">Create Group</button>
                         </div>
-                        
+
                     </div>
                 </div>
             </div>
@@ -186,14 +196,15 @@
     @if($show)
             $(function() {
                 showChat({{ $id }});
+                showGroupChats({{$id}});
             });
         @endif
 </script>
 
-    
-    @if($user_list->count() != 0)
-    <script>
-        var followers=[
+
+@if($user_list->count() != 0)
+<script>
+    var followers=[
         @foreach($user_list->get() as $f)
          {
              "id":"{{$f->follower->id}}",
@@ -201,7 +212,7 @@
          },
         @endforeach
         ]
-    </script>
-    @endif    
+</script>
+@endif
 
 @endsection
