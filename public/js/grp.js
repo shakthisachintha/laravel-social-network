@@ -1,87 +1,118 @@
-var group={"name":"","members":[]};
+var group = {
+    "name": "",
+    "members": []
+};
 
-function addToGroup(id){
-    duplicate=0;
-    group.members.forEach(element=>{
-        if(element==id){
-            duplicate=1;
+function addToGroup(id) {
+    duplicate = 0;
+    group.members.forEach(element => {
+        if (element == id) {
+            duplicate = 1;
         }
     });
-    if(duplicate==0){
+    if (duplicate == 0) {
         group.members.push(id);
-    }else{
+    } else {
         return 0;
     }
-    
-    if(group.members.length!=0){
+
+    if (group.members.length != 0) {
         $("#group-member-widget").fadeIn();
     }
-    if(group.name && group.members.length>=2){
+    if (group.name && group.members.length >= 2) {
         $("#create-grp-btn").removeAttr("disabled");
     }
     followers.forEach(element => {
-        if(element.id==id){
-            $("#group-member-list").append('<a onclick="showDelete(this.id)" id="badge-'+element.id+'" href="javascript:;" style="font-size:13px" class="badge ml-1 p-3 mr-1 mt-2 badge-info grpmember">'+element.name+'</a>');
+        if (element.id == id) {
+            $("#group-member-list").append('<a onclick="showDelete(this.id)" id="badge-' + element.id + '" href="javascript:;" style="font-size:13px" class="badge ml-1 p-3 mr-1 mt-2 badge-info grpmember">' + element.name + '</a>');
             return
         }
     });
-    
+
 }
 
-function resetGroups(){
-    group={"name":"","members":[]};
+function resetGroups() {
+    group = {
+        "name": "",
+        "members": []
+    };
     $("#group-name").val(" ");
     $("#group-member-list").html("");;
-    $("#create-grp-btn").attr("disabled","disabled");
+    $("#create-grp-btn").attr("disabled", "disabled");
 }
 
-function setName(name){
-    group.name=name;
-    if(group.members.length>=2){
+function setName(name) {
+    group.name = name;
+    if (group.members.length >= 2) {
         $("#create-grp-btn").removeAttr("disabled");
     }
 }
 
-function showGroupChat(id){
+function showGroupChat(id) {
+    var data = new FormData();
+    data.append('id', id);
 
+    $.ajax({
+        url: BASE_URL + '/direct-messages/chat',
+        type: "POST",
+        timeout: 5000,
+        data: data,
+        contentType: false,
+        cache: false,
+        processData: false,
+        headers: {'X-CSRF-TOKEN': CSRF},
+        success: function (response) {
+            if (response.code == 200) {
+                $('.dm .chat').html(response.html);
+                $('#userListModal').modal('hide');
+                $(".dm .chat .message-list").animate({ scrollTop: $('.dm .chat .message-list').prop("scrollHeight")}, 0);
+            }else{
+                $('#errorMessageModal').modal('show');
+                $('#errorMessageModal #errors').html('Something went wrong!');
+            }
+        },
+        error: function () {
+            $('#errorMessageModal').modal('show');
+            $('#errorMessageModal #errors').html('Something went wrong!');
+        }
+    });
 }
 
-function showGroupChats(id){
 
-}
-
-function deleteGroupChat(id){
+function deleteGroupChat(id) {
     BootstrapDialog.show({
         title: 'Chat Delete!',
         message: 'Are You Sure To Delete Group Chat ?',
         buttons: [{
             label: "Yes, I'm Sure!",
             cssClass: 'btn-danger',
-            action: function(dialog) {
+            action: function (dialog) {
 
                 var data = new FormData();
                 data.append('id', id);
 
                 $.ajax({
-                    url: BASE_URL+'/group-chat/delete-chat',
+                    url: BASE_URL + '/group-chat/delete-chat',
                     type: "POST",
                     timeout: 5000,
                     data: data,
                     contentType: false,
                     cache: false,
                     processData: false,
-                    headers: {'X-CSRF-TOKEN': CSRF},
-                    success: function(response){
+                    headers: {
+                        'X-CSRF-TOKEN': CSRF
+                    },
+                    success: function (response) {
                         dialog.close();
-                        if (response.code == 200){
+                        if (response.code == 200) {
                             $('.dm .chat').html(" <p style='padding: 20px;'>Group Chat Deleted! </p> ");
-                            $('#chat-people-list-'+id).remove();
-                        }else{
+                            $('#chat-people-list-' + id).remove();
+                        } else {
                             $('#errorMessageModal').modal('show');
                             $('#errorMessageModal #errors').html('Something Went Wrong!');
                         }
                     },
-                    error: function(response){
+                    error: function (response) {
                         console.log(response);
                         dialog.close();
                         $('#errorMessageModal').modal('show');
@@ -91,15 +122,15 @@ function deleteGroupChat(id){
             }
         }, {
             label: 'No!',
-            action: function(dialog) {
+            action: function (dialog) {
                 dialog.close();
             }
         }]
     });
 }
 
-function sendGroupMessage(e){
-    if (e.which == 13 && ! e.shiftKey) {
+function sendGroupMessage(e) {
+    if (e.which == 13 && !e.shiftKey) {
         var id = $('#form-message-write input').val();
         var message = $('#form-message-write textarea').val();
         $('#form-message-write textarea').attr('disabled', 'disable');
@@ -117,7 +148,9 @@ function sendGroupMessage(e){
                 contentType: false,
                 cache: false,
                 processData: false,
-                headers: {'X-CSRF-TOKEN': CSRF},
+                headers: {
+                    'X-CSRF-TOKEN': CSRF
+                },
                 success: function (response) {
                     if (response.code == 200) {
                         console.log(response);
@@ -125,7 +158,9 @@ function sendGroupMessage(e){
                         $('#form-message-write textarea').val("");
                         $('#form-message-write textarea').removeAttr('disabled');
                         $('.dm .chat .message-list').append(response.html);
-                        $(".dm .chat .message-list").animate({ scrollTop: $('.dm .chat .message-list').prop("scrollHeight")}, 1000);
+                        $(".dm .chat .message-list").animate({
+                            scrollTop: $('.dm .chat .message-list').prop("scrollHeight")
+                        }, 1000);
                     } else {
                         $('#errorMessageModal').modal('show');
                         $('#errorMessageModal #errors').html('Something went wrong!');
@@ -142,7 +177,7 @@ function sendGroupMessage(e){
     }
 }
 
-function fetchGroupList(){
+function fetchGroupList() {
     $.ajax({
         url: BASE_URL + '/direct-messages/people-list',
         type: "POST",
@@ -150,7 +185,9 @@ function fetchGroupList(){
         contentType: false,
         cache: false,
         processData: false,
-        headers: {'X-CSRF-TOKEN': CSRF},
+        headers: {
+            'X-CSRF-TOKEN': CSRF
+        },
         success: function (response) {
             if (response.code == 200) {
                 $('.dm .friends-list .alert').remove();
@@ -167,7 +204,45 @@ function fetchGroupList(){
     });
 }
 
-function deleteGroupChatMessage(id){
+function fetchNewGroupMessages() {
+    var id = $('.chat input[name=chat_friend_id]').val();
+
+    if (id > 0) {
+
+
+        var data = new FormData();
+        data.append('id', id);
+
+        $.ajax({
+            url: BASE_URL + '/direct-messages/new-messages',
+            type: "POST",
+            timeout: 5000,
+            data: data,
+            contentType: false,
+            cache: false,
+            processData: false,
+            headers: {
+                'X-CSRF-TOKEN': CSRF
+            },
+            success: function (response) {
+                if (response.code == 200) {
+                    if (response.find == 1) {
+                        $('.dm .chat .message-list .alert').remove();
+                        $('.dm .chat .message-list').append(response.html);
+                        $(".dm .chat .message-list").animate({
+                            scrollTop: $('.dm .chat .message-list').prop("scrollHeight")
+                        }, 1000);
+                    }
+                }
+            },
+            error: function () {
+
+            }
+        });
+    }
+}
+
+function deleteGroupChatMessage(id) {
     alert("group message delete" + id);
     BootstrapDialog.show({
         title: 'Message Delete!',
@@ -175,31 +250,33 @@ function deleteGroupChatMessage(id){
         buttons: [{
             label: "Yes, I'm Sure!",
             cssClass: 'btn-danger',
-            action: function(dialog) {
+            action: function (dialog) {
 
                 var data = new FormData();
                 data.append('id', id);
 
 
                 $.ajax({
-                    url: BASE_URL+'/group-chat/delete-message',
+                    url: BASE_URL + '/group-chat/delete-message',
                     type: "POST",
                     timeout: 5000,
                     data: data,
                     contentType: false,
                     cache: false,
                     processData: false,
-                    headers: {'X-CSRF-TOKEN': CSRF},
-                    success: function(response){
+                    headers: {
+                        'X-CSRF-TOKEN': CSRF
+                    },
+                    success: function (response) {
                         dialog.close();
-                        if (response.code == 200){
-                            $('.dm .chat #chat-message-'+id).remove();
-                        }else{
+                        if (response.code == 200) {
+                            $('.dm .chat #chat-message-' + id).remove();
+                        } else {
                             $('#errorMessageModal').modal('show');
                             $('#errorMessageModal #errors').html('Something went wrong!');
                         }
                     },
-                    error: function(){
+                    error: function () {
                         dialog.close();
                         $('#errorMessageModal').modal('show');
                         $('#errorMessageModal #errors').html('Something went wrong!');
@@ -208,51 +285,53 @@ function deleteGroupChatMessage(id){
             }
         }, {
             label: 'No!',
-            action: function(dialog) {
+            action: function (dialog) {
                 dialog.close();
             }
         }]
     });
 }
 
-function createGroup(){
-   if(group.name && group.members.length>=2){
-       $.ajax({
+function createGroup() {
+    if (group.name && group.members.length >= 2) {
+        $.ajax({
             url: BASE_URL + '/group-chat/create',
             type: "POST",
             timeout: 5000,
             contentType: "application/json",
             cache: false,
             processData: false,
-            data:JSON.stringify(group),
-            headers: {'X-CSRF-TOKEN': CSRF},
+            data: JSON.stringify(group),
+            headers: {
+                'X-CSRF-TOKEN': CSRF
+            },
             success: function (response) {
-                if(response.code==200){
+                if (response.code == 200) {
                     console.log(response);
                     $('.dm .chat').html(response.html);
                     $('#grpChatModal').modal('hide');
                     resetGroups();
-                }else{
+                } else {
                     $('#errorMessageModal').modal('show');
                     $('#errorMessageModal #errors').html("Sorry! Something Went Wrong.<br>Group Creation Failed.");
                 }
             },
-            error:function(data){
+            error: function (data) {
                 console.log(data);
             }
-       });
-   }
+        });
+    }
 }
 
-function showDelete(id){
-    $("#"+id).html('<i class="fas fa-times"></i>');
+function showDelete(id) {
+    $("#" + id).html('<i class="fas fa-times"></i>');
 }
 
-function showList(){
+function showList() {
     $("#search-user-widget").fadeIn();
 }
 
-function hideList(){
+function hideList() {
     $("#search-user-widget").fadeOut();
 }
 

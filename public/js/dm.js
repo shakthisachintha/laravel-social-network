@@ -66,8 +66,8 @@ function fetchPeopleList(){
                 }
             }
         },
-        error: function () {
-
+        error: function (response) {
+            console.log(response)
         }
     });
 

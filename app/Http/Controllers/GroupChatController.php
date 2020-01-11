@@ -41,6 +41,16 @@ class GroupChatController extends Controller
         }
     }
 
+    public function getChatList(){
+        $user=Auth::user();
+        $groups=User::find($user->id)->getGroupChats;
+    }
+
+    public function chat(Request $request){
+        $use=Auth::user();
+        $group=GroupChat::find($request->id);
+    }
+
     public function getGroupList(){
         $user=Auth::user();
         $group_list=User::find($user->id)->getGroupChats;

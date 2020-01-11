@@ -119,8 +119,9 @@ class MessagesController extends Controller
             }
         }
 
+        $group_list=User::find($user->id)->getGroupChats;
 
-        $html = View::make('messages.widgets.people_list', compact('user', 'active_user_id', 'user_list'));
+        $html = View::make('messages.widgets.people_list', compact('user','active_user_id', 'user_list','group_list'));
         $response['html'] = $html->render();
 
         return Response::json($response);
