@@ -90,7 +90,7 @@
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <button onclick="resetGroups();" type="button" class="close" data-dismiss="modal"
+                            <button onclick="removeGroupData();" type="button" class="close" data-dismiss="modal"
                                 aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
@@ -195,6 +195,11 @@
 
 @section('footer')
 <script type="text/javascript">
+@if($init_gc)
+var initial_gc=1;
+@else
+var initial_gc=0;
+@endif
     @if($show)
             var initial_dm = 1;
         @else

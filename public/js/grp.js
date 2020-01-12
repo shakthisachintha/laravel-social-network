@@ -1,14 +1,16 @@
 $(function () {
     setInterval(function () {
-        fetchNewGroupMessages()
-
-    }, 1000);
+        if (initial_gc) {
+            fetchNewGroupMessages()
+        }
+    }, 3000);
 
 });
 
 var group = {
     "name": "",
-    "members": []
+    "members": [],
+    "group_id":""
 };
 
 function addToGroup(id) {
@@ -229,14 +231,68 @@ function sendGroupMessage(e) {
     }
 }
 
-function addNewMember(user_id){
-
+function addMembersToGroup(id){
+    if (group.members.length >= 1) {
+        group.group_id=id;
+        $.ajax({
+            url: BASE_URL + '/group-chat/add-new',
+            type: "POST",
+            timeout: 5000,
+            contentType: "application/json",
+            cache: false,
+            processData: false,
+            data: JSON.stringify(group),
+            headers: {
+                'X-CSRF-TOKEN': CSRF
+            },
+            success: function (response) {
+                if (response.code == 200) {
+                    groupDetails(id, response.name)
+                    resetGroups();
+                } else {
+                    $('#errorMessageModal').modal('show');
+                    $('#errorMessageModal #errors').html("Sorry! Something Went Wrong.<br>Group Creation Failed.");
+                }
+            },
+            error: function (data) {
+                console.log(data);
+            }
+        });
+    }
 }
 
-function deleteMember(grp_id,member_id,member_name){
+function addNewMember(id) {
+    duplicate = 0;
+    group.members.forEach(element => {
+        if (element == id) {
+            duplicate = 1;
+        }
+    });
+    if (duplicate == 0) {
+        group.members.push(id);
+    } else {
+        return 0;
+    }
+
+    if (group.members.length != 0) {
+        $("#group-member-widget-2").fadeIn();
+    }
+    if (group.members.length >= 1) {
+        $("#add-new-member-grp-btn").fadeIn();
+        $("#add-new-member-grp-btn").removeAttr("disabled");
+    }
+    followers.forEach(element => {
+        if (element.id == id) {
+            $("#group-member-list-2").append('<a onclick="showDelete(this.id)" id="badge-' + element.id + '" href="javascript:;" style="font-size:13px" class="badge ml-1 p-3 mr-1 mt-2 badge-info grpmember">' + element.name + '</a>');
+            return
+        }
+    });
+}
+
+function deleteMember(grp_id, member_id, member_name) {
     BootstrapDialog.show({
         title: 'Remove Member!',
-        message: 'Are You Sure To Remove '+member_name+' From Group Chat?',
+        message: 'Are You Sure To Remove ' + member_name + ' From Group Chat?',
         buttons: [{
             label: "Yes, I'm Sure!",
             cssClass: 'btn-danger',
@@ -260,13 +316,16 @@ function deleteMember(grp_id,member_id,member_name){
                     success: function (response) {
                         dialog.close();
                         if (response.code == 200) {
-                            $('.added-grp-members #-'+member_name+'-'+ id).remove();
+                            $('#group-member-' + member_id).remove();
+                            removeGroupData();
+                            groupDetails(grp_id, response.name);
                         } else {
                             $('#errorMessageModal').modal('show');
                             $('#errorMessageModal #errors').html('Something Went Wrong!');
                         }
                     },
-                    error: function () {
+                    error: function (response) {
+                        console.log(response)
                         dialog.close();
                         $('#errorMessageModal').modal('show');
                         $('#errorMessageModal #errors').html('Something Went Wrong!');
@@ -282,9 +341,13 @@ function deleteMember(grp_id,member_id,member_name){
     });
 }
 
+function removeGroupData() {
+    $('.group-chat-detials').html("");
+}
 
-function groupDetails(id,name) {
-    $("#group-chat-data-name").text("Group Chat Details("+name+")");
+function groupDetails(id, name) {
+    resetGroups();
+    $("#group-chat-data-name").text("Group Chat Details (" + name + ")");
     if (id > 0) {
         var data = new FormData();
         data.append('id', id);
@@ -292,7 +355,7 @@ function groupDetails(id,name) {
             url: BASE_URL + '/group-chat/group-data',
             type: "POST",
             timeout: 5000,
-            data:data,
+            data: data,
             contentType: false,
             cache: false,
             processData: false,

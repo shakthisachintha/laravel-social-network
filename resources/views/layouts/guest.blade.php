@@ -18,28 +18,37 @@
     <link href="{{ asset('plugins/bootstrap/css/bootstrap-theme.min.css') }}" rel="stylesheet">
     <link href="{{ asset('css/guest.css') }}" rel="stylesheet">
     <link href="{{ asset('css/bsUtility.css') }}" rel="stylesheet">
-    
+    <script src="{{asset('js/particles.js')}}"></script>
+    <script>
+        /* particlesJS.load(@dom-id, @path-json, @callback (optional)); */
+        particlesJS.load('particles-js', '{{asset('js/particles.json')}}', function() {
+          console.log('callback - particles.js config loaded');
+        });
+    </script>
 </head>
 
 <body>
-    
+    <div style="height:100%" id="particles-js">
 
-    <div class="banner">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-6">
-                    Discover your surroundings. Share your hobbies. Meet new people with Around.kim!
-                </div>
-            </div>
-        </div>
     </div>
 
     <div class="container">
         <div class="row">
-            <div class="col-md-6">
-                <a href="{{ url('/') }}" class="logo">
-                    <img src="{{ asset('images/guest_logo.png') }}" alt="" />
-                </a>
+            <div class="col-md-5 pt-5 mt-5 text-center lead text-white">
+                <a href="{{ url('/') }}" class="mt-0 pt-0">
+                    <img src="{{ asset('images/guest_logo.png') }}" class="mt-0 pt-0" alt="" />
+                </a><br>
+                <p>
+                    Achievers Town one of the biggest gatherings of achievers to present ideas, create new innovations
+                    and problem solving solutions for advancements now and in the future.
+                    The number one source for maximum business developments, achievements, and making connections is
+                    here in Achievers Town.
+                    The Future's Bright. The Future's<br> <b>Achievers Town</b>.
+                </p>
+
+            </div>
+            <div class="col-md-1">
+
             </div>
 
             <div class="col-md-6">

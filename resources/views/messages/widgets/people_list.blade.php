@@ -1,4 +1,4 @@
-@if(count($user_list) == 0)
+@if(count($user_list) == 0 && $group_list->count()==0)
    <div class="alert">No People!</div>
 @else
     @php($i = 0)
@@ -27,7 +27,7 @@
 @else
     @php($i = 0)
     @foreach($group_list as $group)
-        <a href="javascript:;" id="chat-people-list-{{ $group->id }}" onclick="showGroupChat({{ $group->id }})" class="friend @if($friend['user']->id == $active_user_id){{ 'active' }}@elseif($friend['new']){{ 'new-message' }}@endif">
+        <a href="javascript:;" id="chat-people-list-{{ $group->id }}" onclick="showGroupChat({{ $group->id }})" class="friend">
             <div class="circle"></div>
             <div class="image">
                 <img class="img-circle" style="width:70px;height:70px" src="{{ asset('/images/group_icon.png') }}">

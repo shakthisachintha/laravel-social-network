@@ -30,6 +30,13 @@ class MessagesController extends Controller
 
         $user_list = $user->messagePeopleList();
 
+        $group_chat=User::find($user->id)->getGroupChats->count();
+
+        $init_gc=false;
+        if($group_chat>0){
+            $init_gc=true;
+        }
+
         $show = false;
         if ($id != null){
             $friend = User::find($id);
@@ -38,7 +45,7 @@ class MessagesController extends Controller
             }
         }
 
-        return view('messages.index', compact('user', 'user_list', 'show', 'id'));
+        return view('messages.index', compact('user', 'user_list', 'show', 'id','init_gc'));
     }
 
 

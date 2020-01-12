@@ -14,11 +14,11 @@
 Route::group(['middleware' => 'guest'], function () {
     Route::get('/', function () {
         return view('layouts.guest');
-    });
+    })->name('home');
 });
 
 
-Auth::routes();
+Auth::routes(['reset' => true]);
 
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/settings', 'SettingsController@index');
@@ -81,7 +81,9 @@ Route::post('/group-chat/chat', 'GroupChatController@chat');
 Route::post('/group-chat/group-data', 'GroupChatController@groupData');
 Route::post('/group-chat/new-messages', 'GroupChatController@newMessages');
 Route::post('/group-chat/delete-message', 'GroupChatController@deleteGroupMessage');
+Route::post('/group-chat/delete-member', 'GroupChatController@removeMember');
 Route::post('/group-chat/delete-chat', 'GroupChatController@deleteGroup');
+Route::post('/group-chat/add-new', 'GroupChatController@addNewMembers');
 // Route::post('/group-chat/delete-chat', 'GroupChatController@newMessage');
 
 // Find Location

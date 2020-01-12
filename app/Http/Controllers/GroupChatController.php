@@ -18,6 +18,24 @@ class GroupChatController extends Controller
         $this->middleware('auth');
     }
 
+    public function addNewMembers(Request $request){
+        
+        $chat=GroupChat::find($request->group_id);
+
+        foreach ($request->members as $member) {
+            $grp_memeber = new GroupChatMembers();
+            $grp_memeber->group_chat_id = $chat->id;
+            $grp_memeber->user_id = $member;
+            $grp_memeber->save();
+        }
+
+        return response()->json([
+            "code"=>200,
+            "name"=>$chat->name
+        ]);
+
+    }
+
     public function send(Request $request)
     {
         $user = Auth::user();
@@ -44,12 +62,14 @@ class GroupChatController extends Controller
     }
 
     public function removeMember(Request $request){
-        $group_id=$request->grp_id;
+        $group_id=$request->group_id;
         $member_id=$request->member_id;
+        $group=GroupChat::find($group_id);
         $query=GroupChatMembers::where('group_chat_id',$group_id)->where('user_id',$member_id)->first()->delete();
         if($query){
             return response()->json([
                 'code'=>200,
+                'name'=>$group->name
             ]);
         }else{
             return response()->json([
@@ -132,11 +152,8 @@ class GroupChatController extends Controller
 
     public function deleteGroup(Request $request)
     {
-        $grp_messages = GroupChat::find($request->id)->getMessages;
-
-        foreach ($grp_messages as $message) {
-            GroupChatMessage::find($message->id)->delete();
-        }
+        GroupChatMessage::where('grpchat_id',$request->id)->delete();
+       
         $grp_members = GroupChatMembers::where('group_chat_id', $request->id)->get();
 
         foreach ($grp_members as $member) {

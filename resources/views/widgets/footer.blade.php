@@ -3,7 +3,7 @@
         <div class="col-sm-6">
         </div>
         <div class="col-sm-6 text-right">
-            around.kim © 2017 All rights reserved.
+            <a href="https://www.achieverstown.com">Achievers Town</a> © {{date("Y")}} All Rights Reserved.
         </div>
     </div>
-</div>
+</div> 

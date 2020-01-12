@@ -6,7 +6,6 @@
 $(function() {
 
 
-
     fetchPeopleList();
     setInterval(function(){
 
