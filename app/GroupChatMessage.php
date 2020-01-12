@@ -14,8 +14,7 @@ class GroupChatMessage extends Model
     }
 
     public function delete(){
-        $this->deleted=1;
-        $this->save();
+        $this->delete();
     }
 
     public function getSender(){
@@ -36,5 +35,15 @@ class GroupChatMessage extends Model
         }
         $users=json_decode($this->seenby);
         return $users;
+    }
+
+    public function isSeen($user_id){
+        $users=json_decode($this->seenby);
+        foreach ($users->users as $user) {
+            if($user->id==$user_id){
+                return true;
+            }
+        }
+        return false;
     }
 }

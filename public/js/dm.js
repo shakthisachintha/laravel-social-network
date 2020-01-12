@@ -13,7 +13,7 @@ $(function() {
         fetchPeopleList();
         fetchNewMessages();
 
-    }, 10000);
+    }, 3000);
     setInterval(function(){
 
         var id = $('.chat input[name=chat_friend_id]').val();
@@ -78,7 +78,6 @@ function fetchNewMessages(){
     var id = $('.chat input[name=chat_friend_id]').val();
 
     if (id > 0){
-
 
         var data = new FormData();
         data.append('id', id);
@@ -176,6 +175,7 @@ function sendMessage(e){
                         $('.dm .chat .message-list .alert').remove();
                         $('#form-message-write textarea').val("");
                         $('#form-message-write textarea').removeAttr('disabled');
+                        $('#form-message-write textarea').focus();
                         $('.dm .chat .message-list').append(response.html);
                         $(".dm .chat .message-list").animate({ scrollTop: $('.dm .chat .message-list').prop("scrollHeight")}, 1000);
                     } else {

@@ -30,7 +30,7 @@
 
 
                 <div class="friends-list">
-                 
+
                 </div>
 
                 <div class="chat">
@@ -83,6 +83,30 @@
                 </div>
             </div>
             {{-- End Chat Modal --}}
+
+            {{-- Group Data Model --}}
+
+            <div class="modal userListModal fade" id="grpDataModel" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button onclick="resetGroups();" type="button" class="close" data-dismiss="modal"
+                                aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                            <h5 id="group-chat-data-name" class="lead modal-title">Group Chat Details</h5>
+                        </div>
+
+                        <div class="group-chat-detials p-5 modal-body">
+
+                            
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            {{-- End Group Data Model --}}
 
             {{-- Group Chat Modal --}}
 
@@ -178,7 +202,8 @@
         @endif
 </script>
 <script src="{{ asset('js/dm.js') }}"></script>
-<script src="{{ asset('js/grp.js') }}"></scrpit>
+<script src="{{ asset('js/grp.js') }}">
+    </scrpit>
 <script type="text/javascript">
     @if($show)
             $(function() {

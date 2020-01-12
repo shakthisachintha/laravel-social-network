@@ -5,13 +5,16 @@
             src="http://localhost:8000/resizer.php?&amp;w=50&amp;h=50&amp;zc=1&amp;src=images/profile-picture.png">
         <div class="detail">
             <strong>{{$group->name}}</strong>
-            <a href="javascript:;" onclick="groupDetails({{$group->id}});">Group Details</a>
+            <a href="javascript:;" data-toggle="modal" data-target="#grpDataModel" onclick="groupDetails({{$group->id}},'{{$group->name}}');">Group Details</a>
         </div>
     </div>
+    @if ($group->admin==$user->id)
     <a class="btn btn-default btn-xs btn-remove" onclick="deleteGroupChat({{$group->id}})" data-toggle="tooltip" data-placement="bottom"
         title="Delete Chat">
         <i class="fa fa-times"></i>
     </a>
+    @endif
+
     <div class="clearfix"></div>
 </div>
 

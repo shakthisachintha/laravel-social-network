@@ -1,3 +1,11 @@
+$(function () {
+    setInterval(function () {
+        fetchNewGroupMessages()
+
+    }, 1000);
+
+});
+
 var group = {
     "name": "",
     "members": []
@@ -61,30 +69,34 @@ function showGroupChat(id) {
         contentType: false,
         cache: false,
         processData: false,
-        headers: {'X-CSRF-TOKEN': CSRF},
+        headers: {
+            'X-CSRF-TOKEN': CSRF
+        },
         success: function (response) {
             if (response.code == 200) {
                 $('.dm .chat').html(response.html);
                 $('#userListModal').modal('hide');
-                $(".dm .chat .message-list").animate({ scrollTop: $('.dm .chat .message-list').prop("scrollHeight")}, 0);
-            }else{
+                $(".dm .chat .message-list").animate({
+                    scrollTop: $('.dm .chat .message-list').prop("scrollHeight")
+                }, 0);
+            } else {
                 $('#errorMessageModal').modal('show');
                 $('#errorMessageModal #errors').html('Something went wrong!');
             }
         },
-        error: function () {
+        error: function (response) {
+            console.log(response)
             $('#errorMessageModal').modal('show');
             $('#errorMessageModal #errors').html('Something went wrong!');
         }
     });
 }
 
-function fetchNewGroupMessages(id){
+function fetchNewGroupMessages() {
     var id = $('.chat input[name=chat_friend_id]').val();
 
-    if (id > 0){
-
-
+    if (id > 0) {
+        console.log(id);
         var data = new FormData();
         data.append('id', id);
 
@@ -96,18 +108,22 @@ function fetchNewGroupMessages(id){
             contentType: false,
             cache: false,
             processData: false,
-            headers: {'X-CSRF-TOKEN': CSRF},
+            headers: {
+                'X-CSRF-TOKEN': CSRF
+            },
             success: function (response) {
                 if (response.code == 200) {
                     if (response.find == 1) {
                         $('.dm .chat .message-list .alert').remove();
                         $('.dm .chat .message-list').append(response.html);
-                        $(".dm .chat .message-list").animate({scrollTop: $('.dm .chat .message-list').prop("scrollHeight")}, 1000);
+                        $(".dm .chat .message-list").animate({
+                            scrollTop: $('.dm .chat .message-list').prop("scrollHeight")
+                        }, 1000);
                     }
                 }
             },
-            error: function () {
-
+            error: function (response) {
+                console.log(response);
             }
         });
     }
@@ -191,6 +207,7 @@ function sendGroupMessage(e) {
                         $('.dm .chat .message-list .alert').remove();
                         $('#form-message-write textarea').val("");
                         $('#form-message-write textarea').removeAttr('disabled');
+                        $('#form-message-write textarea').focus();
                         $('.dm .chat .message-list').append(response.html);
                         $(".dm .chat .message-list").animate({
                             scrollTop: $('.dm .chat .message-list').prop("scrollHeight")
@@ -209,6 +226,88 @@ function sendGroupMessage(e) {
             });
         }
         return false;
+    }
+}
+
+function addNewMember(user_id){
+
+}
+
+function deleteMember(grp_id,member_id,member_name){
+    BootstrapDialog.show({
+        title: 'Remove Member!',
+        message: 'Are You Sure To Remove '+member_name+' From Group Chat?',
+        buttons: [{
+            label: "Yes, I'm Sure!",
+            cssClass: 'btn-danger',
+            action: function (dialog) {
+
+                var data = new FormData();
+                data.append('group_id', grp_id);
+                data.append('member_id', member_id);
+
+                $.ajax({
+                    url: BASE_URL + '/group-chat/delete-member',
+                    type: "POST",
+                    timeout: 5000,
+                    data: data,
+                    contentType: false,
+                    cache: false,
+                    processData: false,
+                    headers: {
+                        'X-CSRF-TOKEN': CSRF
+                    },
+                    success: function (response) {
+                        dialog.close();
+                        if (response.code == 200) {
+                            $('.added-grp-members #-'+member_name+'-'+ id).remove();
+                        } else {
+                            $('#errorMessageModal').modal('show');
+                            $('#errorMessageModal #errors').html('Something Went Wrong!');
+                        }
+                    },
+                    error: function () {
+                        dialog.close();
+                        $('#errorMessageModal').modal('show');
+                        $('#errorMessageModal #errors').html('Something Went Wrong!');
+                    }
+                });
+            }
+        }, {
+            label: 'No!',
+            action: function (dialog) {
+                dialog.close();
+            }
+        }]
+    });
+}
+
+
+function groupDetails(id,name) {
+    $("#group-chat-data-name").text("Group Chat Details("+name+")");
+    if (id > 0) {
+        var data = new FormData();
+        data.append('id', id);
+        $.ajax({
+            url: BASE_URL + '/group-chat/group-data',
+            type: "POST",
+            timeout: 5000,
+            data:data,
+            contentType: false,
+            cache: false,
+            processData: false,
+            headers: {
+                'X-CSRF-TOKEN': CSRF
+            },
+            success: function (response) {
+                if (response.code == 200) {
+                    $('.group-chat-detials').html(response.html);
+                }
+            },
+            error: function (response) {
+                console.log(response);
+            }
+        });
     }
 }
 
@@ -239,45 +338,8 @@ function fetchGroupList() {
     });
 }
 
-function fetchNewGroupMessages() {
-    var id = $('.chat input[name=chat_friend_id]').val();
-
-    if (id > 0) {
-
-        var data = new FormData();
-        data.append('id', id);
-
-        $.ajax({
-            url: BASE_URL + '/direct-messages/new-messages',
-            type: "POST",
-            timeout: 5000,
-            data: data,
-            contentType: false,
-            cache: false,
-            processData: false,
-            headers: {
-                'X-CSRF-TOKEN': CSRF
-            },
-            success: function (response) {
-                if (response.code == 200) {
-                    if (response.find == 1) {
-                        $('.dm .chat .message-list .alert').remove();
-                        $('.dm .chat .message-list').append(response.html);
-                        $(".dm .chat .message-list").animate({
-                            scrollTop: $('.dm .chat .message-list').prop("scrollHeight")
-                        }, 1000);
-                    }
-                }
-            },
-            error: function () {
-
-            }
-        });
-    }
-}
 
 function deleteGroupChatMessage(id) {
-    alert("group message delete" + id);
     BootstrapDialog.show({
         title: 'Message Delete!',
         message: 'Are you sure to delete message ?',

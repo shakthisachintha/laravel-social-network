@@ -78,10 +78,11 @@ Route::post('/direct-messages/notifications', 'MessagesController@notifications'
 Route::post('/group-chat/create', 'GroupChatController@createGroup');
 Route::post('/group-chat/send', 'GroupChatController@send');
 Route::post('/group-chat/chat', 'GroupChatController@chat');
-Route::post('/group-chat/new-messages', 'GroupChatController@chat');
+Route::post('/group-chat/group-data', 'GroupChatController@groupData');
+Route::post('/group-chat/new-messages', 'GroupChatController@newMessages');
 Route::post('/group-chat/delete-message', 'GroupChatController@deleteGroupMessage');
 Route::post('/group-chat/delete-chat', 'GroupChatController@deleteGroup');
-Route::post('/group-chat/delete-chat', 'GroupChatController@newMessage');
+// Route::post('/group-chat/delete-chat', 'GroupChatController@newMessage');
 
 // Find Location
 Route::get('/find-my-location', 'FindLocationController@index');
