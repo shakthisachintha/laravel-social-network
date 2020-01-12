@@ -78,6 +78,7 @@ Route::post('/direct-messages/notifications', 'MessagesController@notifications'
 Route::post('/group-chat/create', 'GroupChatController@createGroup');
 Route::post('/group-chat/send', 'GroupChatController@send');
 Route::post('/group-chat/chat', 'GroupChatController@chat');
+Route::post('/group-chat/new-messages', 'GroupChatController@chat');
 Route::post('/group-chat/delete-message', 'GroupChatController@deleteGroupMessage');
 Route::post('/group-chat/delete-chat', 'GroupChatController@deleteGroup');
 Route::post('/group-chat/delete-chat', 'GroupChatController@newMessage');

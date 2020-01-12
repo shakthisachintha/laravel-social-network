@@ -1,4 +1,4 @@
-<input type="hidden" name="chat_friend_id" value="3">
+<input type="hidden" name="chat_friend_id" value="{{$group->id}}">
 <div class="chat-info">
     <div class="user-profile">
         <img class="img-circle"
@@ -23,7 +23,7 @@
     </div>
     @else
     @php($i=0)
-    @foreach($message_list as $message)
+    @foreach($message_list->reverse() as $message)
 
     @include('messages.group.single_message')
 

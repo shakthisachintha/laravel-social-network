@@ -30,20 +30,7 @@
 
 
                 <div class="friends-list">
-                    <a href="javascript:;" id="chat-people-list-3" onclick="showChat(3)" class="friend active">
-                        <div class="circle"></div>
-                        <div class="image">
-                            <img class="img-circle"
-                                src="http://localhost:8000/resizer.php?&amp;w=70&amp;h=70&amp;zc=1&amp;src=images/profile-picture.png">
-                        </div>
-                        <div class="detail">
-                            <strong>Jordyn Marvin</strong>
-                            <span>jjjj</span>
-                            <small>1 minute ago</small>
-                        </div>
-                        <input type="hidden" name="people-list-first-id" value="3">
-                        <div class="clearfix"></div>
-                    </a>
+                 
                 </div>
 
                 <div class="chat">

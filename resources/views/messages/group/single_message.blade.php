@@ -8,7 +8,8 @@
     <div class="text">
         {{ $message->message}}
     </div>
-    <a href="javascript:;" class="delete" onclick="deleteGroupChatMessage({{ $message->id }})">Delete</a>
+    @if($message->sender == $user->id)<a href="javascript:;" class="delete" onclick="deleteGroupChatMessage({{ $message->id }})">Delete</a>@endif
+    
     <small>{{ $message->created_at->format('H:i') }}</small>
 </div>
 <div class="clearfix"></div>

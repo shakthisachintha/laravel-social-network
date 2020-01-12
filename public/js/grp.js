@@ -51,9 +51,10 @@ function setName(name) {
 function showGroupChat(id) {
     var data = new FormData();
     data.append('id', id);
+    // $("chat-people-list-"+id).addClass('active');
 
     $.ajax({
-        url: BASE_URL + '/direct-messages/chat',
+        url: BASE_URL + '/group-chat/chat',
         type: "POST",
         timeout: 5000,
         data: data,
@@ -78,6 +79,39 @@ function showGroupChat(id) {
     });
 }
 
+function fetchNewGroupMessages(id){
+    var id = $('.chat input[name=chat_friend_id]').val();
+
+    if (id > 0){
+
+
+        var data = new FormData();
+        data.append('id', id);
+
+        $.ajax({
+            url: BASE_URL + '/group-chat/new-messages',
+            type: "POST",
+            timeout: 5000,
+            data: data,
+            contentType: false,
+            cache: false,
+            processData: false,
+            headers: {'X-CSRF-TOKEN': CSRF},
+            success: function (response) {
+                if (response.code == 200) {
+                    if (response.find == 1) {
+                        $('.dm .chat .message-list .alert').remove();
+                        $('.dm .chat .message-list').append(response.html);
+                        $(".dm .chat .message-list").animate({scrollTop: $('.dm .chat .message-list').prop("scrollHeight")}, 1000);
+                    }
+                }
+            },
+            error: function () {
+
+            }
+        });
+    }
+}
 
 function deleteGroupChat(id) {
     BootstrapDialog.show({
@@ -164,12 +198,13 @@ function sendGroupMessage(e) {
                     } else {
                         $('#errorMessageModal').modal('show');
                         $('#errorMessageModal #errors').html('Something went wrong!');
+                        $('#form-message-write textarea').removeAttr('disabled');
                     }
                 },
                 error: function (response) {
-                    console.log(response);
                     $('#errorMessageModal').modal('show');
                     $('#errorMessageModal #errors').html('Something went wrong!');
+                    $('#form-message-write textarea').removeAttr('disabled');
                 }
             });
         }

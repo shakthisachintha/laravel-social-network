@@ -27,7 +27,7 @@
 @else
     @php($i = 0)
     @foreach($group_list as $group)
-        <a href="javascript:;" id="chat-people-list-{{ $group->id }}" onclick="showGroupChat({{ $group->id }})" class="friend">
+        <a href="javascript:;" id="chat-people-list-{{ $group->id }}" onclick="showGroupChat({{ $group->id }})" class="friend @if($friend['user']->id == $active_user_id){{ 'active' }}@elseif($friend['new']){{ 'new-message' }}@endif">
             <div class="circle"></div>
             <div class="image">
                 <img class="img-circle" style="width:70px;height:70px" src="{{ asset('/images/group_icon.png') }}">

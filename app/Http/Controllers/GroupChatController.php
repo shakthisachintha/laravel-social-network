@@ -47,8 +47,15 @@ class GroupChatController extends Controller
     }
 
     public function chat(Request $request){
-        $use=Auth::user();
+        $user=Auth::user();
         $group=GroupChat::find($request->id);
+        $message_list=GroupChat::find($group->id)->getMessages;
+        $can_send_message=true;
+        $html = View::make('messages.group.chat', compact('user', 'group', 'message_list', 'can_send_message'))->render();
+        return response()->json([
+            "code"=>200,
+            "html"=>$html,
+        ]);
     }
 
     public function getGroupList(){

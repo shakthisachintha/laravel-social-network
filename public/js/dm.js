@@ -13,7 +13,7 @@ $(function() {
         fetchPeopleList();
         fetchNewMessages();
 
-    }, 1000);
+    }, 10000);
     setInterval(function(){
 
         var id = $('.chat input[name=chat_friend_id]').val();
@@ -155,6 +155,7 @@ function sendMessage(e){
     if (e.which == 13 && ! e.shiftKey) {
         var id = $('#form-message-write input').val();
         var message = $('#form-message-write textarea').val();
+        $('#form-message-write textarea').attr('disabled', 'disable');
 
         if (message.trim() != '') {
             var data = new FormData();
@@ -174,15 +175,18 @@ function sendMessage(e){
                     if (response.code == 200) {
                         $('.dm .chat .message-list .alert').remove();
                         $('#form-message-write textarea').val("");
+                        $('#form-message-write textarea').removeAttr('disabled');
                         $('.dm .chat .message-list').append(response.html);
                         $(".dm .chat .message-list").animate({ scrollTop: $('.dm .chat .message-list').prop("scrollHeight")}, 1000);
                     } else {
                         $('#errorMessageModal').modal('show');
+                        $('#form-message-write textarea').removeAttr('disabled');
                         $('#errorMessageModal #errors').html('Something went wrong!');
                     }
                 },
                 error: function () {
                     $('#errorMessageModal').modal('show');
+                    $('#form-message-write textarea').removeAttr('disabled');
                     $('#errorMessageModal #errors').html('Something went wrong!');
                 }
             });
