@@ -244,7 +244,6 @@ function fetchNewGroupMessages() {
 
     if (id > 0) {
 
-
         var data = new FormData();
         data.append('id', id);
 

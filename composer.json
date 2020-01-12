@@ -7,7 +7,6 @@
     "require": {
         "php": ">=5.6.4",
         "alexpechkarev/google-maps": "1.0.7",
-        "barryvdh/laravel-debugbar": "^2.3",
         "barryvdh/laravel-ide-helper": "^2.3",
         "laravel/framework": "5.4.*",
         "laravel/tinker": "~1.0",
