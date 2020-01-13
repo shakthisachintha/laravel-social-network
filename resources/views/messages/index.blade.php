@@ -11,7 +11,7 @@
 
 
             <div class="content-page-title">
-                <i class="fa fa-commenting"></i> Direct Messages
+                <i class="fa fa-commenting"></i> Chat With Friends
             </div>
 
 

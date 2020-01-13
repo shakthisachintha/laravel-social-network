@@ -59,6 +59,9 @@ Route::get('/relatives/pending', 'RelativesController@pending');
 Route::post('/relative/delete', 'RelativesController@delete');
 Route::post('/relative/request', 'RelativesController@relativeRequest');
 
+//Videos
+Route::get('/videos', 'VideoController@index');
+Route::post('/videos/upload', 'VideoController@upload');
 
 // Nearby
 Route::get('/nearby', 'NearbyController@index');
@@ -84,7 +87,6 @@ Route::post('/group-chat/delete-message', 'GroupChatController@deleteGroupMessag
 Route::post('/group-chat/delete-member', 'GroupChatController@removeMember');
 Route::post('/group-chat/delete-chat', 'GroupChatController@deleteGroup');
 Route::post('/group-chat/add-new', 'GroupChatController@addNewMembers');
-// Route::post('/group-chat/delete-chat', 'GroupChatController@newMessage');
 
 // Find Location
 Route::get('/find-my-location', 'FindLocationController@index');

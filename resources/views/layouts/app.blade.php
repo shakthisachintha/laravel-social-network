@@ -23,6 +23,8 @@
     <link href="{{ asset('plugins/bootstrap/css/bootstrap-theme.min.css') }}" rel="stylesheet">
     <link href="{{ asset('css/around.css') }}" rel="stylesheet">
     <link href="{{ asset('css/bsUtility.css') }}" rel="stylesheet">
+    <script src="//cdn.jsdelivr.net/npm/afterglowplayer@1.x"></script>
+    <script src="{{ asset('plugins/jquery/jquery-2.1.4.min.js')  }}"></script>
     @yield('header')
 </head>
 
@@ -127,7 +129,7 @@
     var CSRF = "{{ csrf_token() }}";
     var WALL_ACTIVE = false;
     </script>
-    <script src="{{ asset('plugins/jquery/jquery-2.1.4.min.js')  }}"></script>
+  
     <script src="{{ asset('plugins/pace-master/pace.min.js') }}"></script>
     <script src="{{ asset('plugins/bootstrap/js/bootstrap.min.js') }}"></script>
     <script src="{{ asset('plugins/jquery.serializeJSON/jquery.serializejson.min.js') }}"></script>

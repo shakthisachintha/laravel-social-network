@@ -3,7 +3,7 @@
         @if($post->getCommentCount() > 0)
             @if($post->getCommentCount() > 1){{ $post->getCommentCount().' comments' }}@else{{ $post->getCommentCount().' comment' }}@endif
         @else
-            No Comments! Write a comment
+            No Comments Yet!
         @endif
     </small>
 </p>

@@ -22,4 +22,8 @@ class PostImage extends Model
         return url('storage/uploads/posts/'.$this->image_path);
     }
 
+    public function getVideoURL(){
+        return url('storage/videos/'.$this->image_path);
+    }
+
 }

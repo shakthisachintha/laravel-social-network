@@ -18,6 +18,7 @@ class CreatePostsTables extends Migration
             $table->integer('user_id')->unsigned();
             $table->integer('group_id')->nullable();
             $table->boolean('has_image')->default(0);
+            $table->boolean('has_video')->default(0);
             $table->text('content')->nullable();
 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('CASCADE');

@@ -19,9 +19,15 @@
             </a>
         </li>
         <li class="list-group-item">
+            <a href="{{ url('/videos') }}" class="menu-videos">
+                <i class="fa fa-video-camera"></i>
+                Educational Videos
+            </a>
+        </li>
+        <li class="list-group-item">
             <a href="{{ url('/direct-messages') }}" class="menu-dm">
                 <i class="fa fa-commenting"></i>
-                Direct Messages
+                Chats
             </a>
         </li>
     </ul>
